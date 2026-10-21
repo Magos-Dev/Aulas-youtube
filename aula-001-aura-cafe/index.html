@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura Café — Cafeteria Artesanal de Luxo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0C0C0E;
+      color: #F4F4F5;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    a {
+      color: #C5A059;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: #E2C896;
+    }
+
+    button {
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: rgba(12, 12, 14, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 12px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+      z-index: 100;
+      transition: all 0.4s ease;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 100px;
+    }
+
+    .logo {
+      height: 70px;
+      width: auto;
+      object-fit: contain;
+      filter: brightness(1.3) drop-shadow(0 0 15px rgba(197, 160, 89, 0.6)) drop-shadow(0 0 30px rgba(197, 160, 89, 0.3));
+      transition: all 0.3s ease;
+      background: transparent;
+    }
+
+    .logo:hover {
+      filter: brightness(1.4) drop-shadow(0 0 25px rgba(197, 160, 89, 0.8)) drop-shadow(0 0 40px rgba(197, 160, 89, 0.4));
+    }
+
+    nav {
+      display: flex;
+      gap: 64px;
+      font-size: 14px;
+      letter-spacing: 0.4px;
+    }
+
+    nav a {
+      position: relative;
+      padding: 8px 0;
+      border-bottom: 2px solid transparent;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    nav a.active {
+      color: #C5A059;
+      border-bottom-color: #C5A059;
+      font-weight: 600;
+    }
+
+    nav a:not(.active) {
+      color: #F4F4F5;
+    }
+
+    .btn-reservar {
+      padding: 14px 44px;
+      background: linear-gradient(135deg, #C5A059 0%, #E2C896 100%);
+      color: #0C0C0E;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
+    }
+
+    /* Menu Burger */
+    .burger-menu {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .burger-line {
+      width: 28px;
+      height: 3px;
+      background: #C5A059;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .burger-menu.active .burger-line:nth-child(1) {
+      transform: rotate(45deg) translate(10px, 10px);
+    }
+
+    .burger-menu.active .burger-line:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger-menu.active .burger-line:nth-child(3) {
+      transform: rotate(-45deg) translate(9px, -9px);
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(12, 12, 14, 0.98);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      z-index: 99;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-menu.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .mobile-menu a {
+      font-size: 24px;
+      font-weight: 500;
+      color: #C5A059;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu a:hover {
+      font-size: 26px;
+      color: #E2C896;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        padding: 12px 20px;
+      }
+
+      .header-left {
+        gap: 20px;
+      }
+
+      .logo {
+        height: 50px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .burger-menu {
+        display: flex;
+      }
+
+      .btn-reservar {
+        padding: 12px 32px;
+        font-size: 12px;
+      }
+
+      .hero {
+        height: auto;
+        min-height: 500px;
+        padding: 40px 20px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .hero-buttons button {
+        width: 100%;
+      }
+
+      .section {
+        padding: 60px 20px !important;
+      }
+
+      .section-content {
+        padding: 0 !important;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .about-content {
+        grid-template-columns: 1fr !important;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    /* Hero */
+    .hero {
+      width: 100%;
+      height: 720px;
+      background: linear-gradient(135deg, rgba(12, 12, 14, 0.7) 0%, rgba(22, 22, 26, 0.6) 50%), url('imagens/bar.jpg') center/cover;
+      background-blend-mode: multiply;
+      padding: 80px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 24px;
+    }
+
+    .hero-badge {
+      background: rgba(197, 160, 89, 0.15);
+      border: 1px solid #C5A059;
+      padding: 10px 20px;
+      border-radius: 24px;
+      font-size: 12px;
+      color: #E2C896;
+      letter-spacing: 2px;
+      font-weight: 600;
+    }
+
+    .hero h1 {
+      font-size: 64px;
+      margin: 0;
+      color: #F4F4F5;
+      font-weight: 700;
+      line-height: 1.2;
+      max-width: 900px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #E2C896;
+      margin: 0;
+      max-width: 850px;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 32px;
+    }
+
+    .btn-primary {
+      padding: 16px 52px;
+      background: linear-gradient(135deg, #C5A059 0%, #E2C896 100%);
+      color: #0C0C0E;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      box-shadow: 0 8px 25px rgba(197, 160, 89, 0.35);
+    }
+
+    .btn-secondary {
+      padding: 16px 52px;
+      background: rgba(197, 160, 89, 0.1);
+      color: #E2C896;
+      border: 2px solid #C5A059;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* Menu Section */
+    .section {
+      width: 100%;
+      padding: 120px 60px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .section-content {
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .section-title {
+      font-size: 52px;
+      margin: 0 0 60px 0;
+      color: #F4F4F5;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .menu-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 80px;
+      border-bottom: 1px solid #27272A;
+      padding-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .menu-tabs button {
+      background: none;
+      border: none;
+      color: #9CA3AF;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .menu-tabs button.active {
+      border-bottom: 2px solid #C5A059;
+      color: #C5A059;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+
+    .menu-item {
+      background: #0C0C0E;
+      padding: 40px;
+      border-radius: 6px;
+      border: 1px solid #27272A;
+    }
+
+    .menu-item h3 {
+      font-size: 20px;
+      margin: 0 0 12px 0;
+      color: #F4F4F5;
+      font-weight: 700;
+    }
+
+    .menu-item .category {
+      font-size: 13px;
+      color: #E2C896;
+      margin: 0 0 16px 0;
+      letter-spacing: 1px;
+    }
+
+    .menu-item p {
+      font-size: 14px;
+      color: #9CA3AF;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .menu-item .price {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #C5A059;
+      font-weight: 600;
+    }
+
+    /* About Section */
+    .about {
+      background: #0C0C0E;
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-image {
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(197, 160, 89, 0.15);
+    }
+
+    .about-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .about-text h2 {
+      font-size: 48px;
+      margin: 0 0 32px 0;
+      color: #F4F4F5;
+      font-weight: 700;
+    }
+
+    .about-text p {
+      font-size: 16px;
+      color: #9CA3AF;
+      margin: 0 0 24px 0;
+      line-height: 1.8;
+    }
+
+    .about-text p:last-of-type {
+      margin-bottom: 40px;
+    }
+
+    /* Contact Section */
+    .contact {
+      background: #16161A;
+    }
+
+    .contact-content {
+      text-align: center;
+    }
+
+    .contact-content h2 {
+      font-size: 48px;
+      margin: 0 0 32px 0;
+      color: #F4F4F5;
+      font-weight: 700;
+    }
+
+    .contact-content > p {
+      font-size: 16px;
+      color: #9CA3AF;
+      margin: 0 0 60px 0;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.8;
+    }
+
+    .contact-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 80px;
+    }
+
+    .contact-buttons .btn-primary {
+      padding: 16px 52px;
+    }
+
+    .contact-buttons .btn-secondary {
+      padding: 16px 52px;
+    }
+
+    .contact-info {
+      background: #0C0C0E;
+      padding: 60px;
+      border: 1px solid #27272A;
+      border-radius: 4px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+
+    .contact-info > div {
+      text-align: left;
+    }
+
+    .contact-info-title {
+      color: #C5A059;
+      margin-bottom: 16px;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+
+    .contact-info-text {
+      color: #F4F4F5;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    /* Footer */
+    footer {
+      width: 100%;
+      padding: 80px 60px;
+      background: #0C0C0E;
+      border-top: 1px solid #27272A;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      text-align: center;
+      margin-bottom: 80px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+    }
+
+    .footer-logo img {
+      height: 80px;
+      width: auto;
+      object-fit: contain;
+      filter: brightness(1.35) drop-shadow(0 0 25px rgba(197, 160, 89, 0.7)) drop-shadow(0 0 50px rgba(197, 160, 89, 0.35));
+      margin-bottom: 16px;
+      transition: all 0.3s ease;
+      background: transparent;
+    }
+
+    .footer-logo img:hover {
+      filter: brightness(1.45) drop-shadow(0 0 35px rgba(197, 160, 89, 0.9)) drop-shadow(0 0 60px rgba(197, 160, 89, 0.5));
+    }
+
+    .footer-logo p {
+      font-size: 14px;
+      color: #9CA3AF;
+      margin: 0;
+      letter-spacing: 1px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+
+    .footer-section h3 {
+      color: #C5A059;
+      margin-bottom: 16px;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-section li {
+      margin-bottom: 8px;
+    }
+
+    .footer-section a {
+      font-size: 13px;
+      color: #9CA3AF;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-socials a {
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .footer-socials img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .footer-section a[title="Instagram"] {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-section a[title="Instagram"]:hover {
+      filter: drop-shadow(0 0 20px rgba(197, 160, 89, 0.8)) brightness(1.2);
+      transform: scale(1.1);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #27272A;
+      padding-top: 40px;
+      text-align: center;
+    }
+
+    .footer-bottom p {
+      margin: 0;
+      font-size: 13px;
+      color: #9CA3AF;
+    }
+
+    /* Animação LED */
+    @keyframes ledGlow {
+      0%, 100% {
+        filter: brightness(1.3) drop-shadow(0 0 15px rgba(197, 160, 89, 0.6)) drop-shadow(0 0 30px rgba(197, 160, 89, 0.3));
+      }
+      50% {
+        filter: brightness(1.35) drop-shadow(0 0 20px rgba(197, 160, 89, 0.7)) drop-shadow(0 0 35px rgba(197, 160, 89, 0.4));
+      }
+    }
+
+    .logo {
+      animation: ledGlow 3s ease-in-out infinite;
+    }
+
+    .footer-logo img {
+      animation: ledGlow 3.5s ease-in-out infinite;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .header-left {
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+      }
+
+      nav {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .hero {
+        height: auto;
+        padding: 40px 20px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-info {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <img src="imagens/Logo.png" alt="Aura Café" class="logo">
+      <nav>
+        <a href="#cafe" class="active">O Café</a>
+        <a href="#experiencias">Experiências</a>
+        <a href="#menu">Menu Curado</a>
+        <a href="#localizacao">Localização</a>
+      </nav>
+    </div>
+    <div style="display: flex; align-items: center; gap: 20px;">
+      <button class="btn-reservar">Reservar Mesa</button>
+      <button class="burger-menu" onclick="toggleMobileMenu()">
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#cafe" onclick="closeMobileMenu()">O Café</a>
+    <a href="#experiencias" onclick="closeMobileMenu()">Experiências</a>
+    <a href="#menu" onclick="closeMobileMenu()">Menu Curado</a>
+    <a href="#localizacao" onclick="closeMobileMenu()">Localização</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge">MICROTORREFAÇÃO & GASTRONOMIA DE LUXO</div>
+    <h1>A excelência do café especial, elevada a uma experiência sensorial única.</h1>
+    <p>Grãos selecionados em microlotes de alta altitude, extraídos com rigor artesanal em um ambiente intimista e sofisticado.</p>
+    <div class="hero-buttons">
+      <button class="btn-primary">Explorar o Menu</button>
+      <button class="btn-secondary">Conhecer o Espaço</button>
+    </div>
+  </section>
+
+  <!-- Menu -->
+  <section id="menu" class="section" style="background: #0C0C0E;">
+    <div class="section-content">
+      <h2 class="section-title">Menu Curado</h2>
+
+      <div class="menu-tabs">
+        <button class="active">ESPRESSOS & MÉTODOS</button>
+        <button>VIENNOISERIE & DOCES</button>
+        <button>GRÃOS ESPECIAIS</button>
+      </div>
+
+      <div class="menu-grid">
+        <div class="menu-item">
+          <h3>Flat White Dourado</h3>
+          <div class="category">ASSINATURA</div>
+          <p>Ristretto duplo, leite texturizado aveludado e finalização com infusão de fava de baunilha.</p>
+          <div class="price">R$ 38,00</div>
+        </div>
+        <div class="menu-item">
+          <h3>Cold Brew Signature</h3>
+          <div class="category">EXCLUSIVO</div>
+          <p>Maturação a frio por 18 horas em barril de carvalho tostado. Corpo sedoso e persistente.</p>
+          <div class="price">R$ 32,00</div>
+        </div>
+        <div class="menu-item">
+          <h3>Cappuccino Clássico</h3>
+          <div class="category">TRADICIONAL</div>
+          <p>Proporção perfeita 1:1:1 com leite texturizado sedoso e latte art refinada.</p>
+          <div class="price">R$ 32,00</div>
+        </div>
+        <div class="menu-item">
+          <h3>Americano Premium</h3>
+          <div class="category">CLÁSSICO</div>
+          <p>Duplo espresso com água quente. Corpo redondo com notas de chocolate e caramelo.</p>
+          <div class="price">R$ 26,00</div>
+        </div>
+        <div class="menu-item">
+          <h3>Macchiato Refinado</h3>
+          <div class="category">ELEGÂNCIA</div>
+          <p>Espresso com uma nuvem de espuma de leite. Intensidade com leveza e sofisticação.</p>
+          <div class="price">R$ 28,00</div>
+        </div>
+        <div class="menu-item">
+          <h3>Mocha de Autor</h3>
+          <div class="category">CHOCOLATE BELGA</div>
+          <p>Espresso com chocolate 70% cacau de origem e leite texturizado aveludado.</p>
+          <div class="price">R$ 36,00</div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 60px;">
+        <button style="padding: 14px 40px; background: transparent; color: #E2C896; border: 2px solid #C5A059; border-radius: 6px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px;">Baixar Carta Completa em PDF</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="cafe" class="section about">
+    <div class="section-content">
+      <div class="about-content">
+        <div class="about-image">
+          <img src="imagens/fot1.jpg" alt="Aura Café">
+        </div>
+        <div class="about-text">
+          <h2>Mais que uma cafeteria, um refúgio para desacelerar.</h2>
+          <p>Cada detalhe do Aura Café foi planejado para desacelerar o ritmo urbano: a acústica suave, o mármore escuro que acolhe o vapor do espresso e o aroma inconfundível dos nossos microlotes recém-torrados.</p>
+          <p>Um espaço intimista onde a precisão técnica se encontra com a sensibilidade sensorial. Aqui, cada xícara é um momento de conexão — com a origem do café, com o craft do barista, com você mesmo.</p>
+          <button class="btn-primary">Agendar Visita</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="localizacao" class="section contact">
+    <div class="section-content">
+      <h2>Viva a experiência Aura.</h2>
+      <p>Reserve sua mesa para uma tarde de imersão sensorial. Atendimento personalizado e recomendações por nossos sommeliers de café.</p>
+
+      <div class="contact-buttons">
+        <button class="btn-primary">Agendar Visita</button>
+        <button class="btn-secondary">Falar no WhatsApp</button>
+      </div>
+
+      <div class="contact-info">
+        <div>
+          <div class="contact-info-title">HORÁRIO DE FUNCIONAMENTO</div>
+          <div class="contact-info-text">Terça a Domingo<br/>08h às 21h</div>
+        </div>
+        <div>
+          <div class="contact-info-title">ENDEREÇO</div>
+          <div class="contact-info-text">Unidade Conceito<br/>Centro Nobre</div>
+        </div>
+        <div>
+          <div class="contact-info-title">CONTATO</div>
+          <div class="contact-info-text">(11) 9999-9999<br/>hello@auracafe.com</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="imagens/Logo.png" alt="Aura Café">
+        <p>Experiência sensorial única através do café especial artesanal</p>
+      </div>
+
+      <div class="footer-grid">
+        <div></div>
+
+        <div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+            <div class="footer-section">
+              <h3>NAVEGAÇÃO</h3>
+              <ul>
+                <li><a href="#cafe">O Café</a></li>
+                <li><a href="#menu">Menu Curado</a></li>
+                <li><a href="#experiencias">Experiências</a></li>
+              </ul>
+            </div>
+            <div class="footer-section">
+              <h3>LEGAL</h3>
+              <ul>
+                <li><a href="#">Privacidade</a></li>
+                <li><a href="#">Imprensa</a></li>
+                <li><a href="#">Contato</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h3>REDES SOCIAIS</h3>
+          <a href="https://www.instagram.com/adrianoafweb" target="_blank" title="Instagram" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 2px solid #C5A059; border-radius: 8px; filter: drop-shadow(0 0 12px rgba(197, 160, 89, 0.5)) brightness(1.1); transition: all 0.3s ease;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C5A059" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <circle cx="17.5" cy="6.5" r="1.5"></circle>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© Aura Café. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Menu Burger
+    function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobileMenu');
+      const burgerMenu = document.querySelector('.burger-menu');
+      mobileMenu.classList.toggle('active');
+      burgerMenu.classList.toggle('active');
+    }
+
+    function closeMobileMenu() {
+      const mobileMenu = document.getElementById('mobileMenu');
+      const burgerMenu = document.querySelector('.burger-menu');
+      mobileMenu.classList.remove('active');
+      burgerMenu.classList.remove('active');
+    }
+
+    // Fechar menu ao clicar fora
+    document.addEventListener('click', function(event) {
+      const mobileMenu = document.getElementById('mobileMenu');
+      const burgerMenu = document.querySelector('.burger-menu');
+      if (!mobileMenu.contains(event.target) && !burgerMenu.contains(event.target)) {
+        closeMobileMenu();
+      }
+    });
+
+    // Smooth scroll para links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          closeMobileMenu();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Atualizar nav ativa
+    window.addEventListener('scroll', () => {
+      const navLinks = document.querySelectorAll('nav a');
+      const sections = ['cafe', 'experiencias', 'menu', 'localizacao'];
+
+      sections.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            document.querySelector(`nav a[href="#${id}"]`).classList.add('active');
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
