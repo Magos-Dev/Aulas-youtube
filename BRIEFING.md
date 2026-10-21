@@ -54,7 +54,7 @@ git checkout aula-001-nome-aula
 
 | # | Título | Branch | Status |
 |---|--------|--------|--------|
-| 1 | Em breve... | `aula-001-...` | 🔜 |
+| 1 | 🎓 Aura Café - Website de Luxo com Dark Mode | [`aula-001-aura-cafe`](https://github.com/Magos-Dev/Aulas-youtube/tree/aula-001-aura-cafe) | ✅ Publicado |
 
 ---
 
