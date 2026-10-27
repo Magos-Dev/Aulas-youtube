@@ -1,0 +1,21 @@
+# Sessão do WhatsApp (QR code) e banco do CRM: pessoais, nunca versionar
+dados/wa_perfil/
+dados/crm.db
+dados/crm.db-*
+
+# Leads coletados (telefones de terceiros) e página gerada
+dados/*.json
+dados/*.csv
+saida/
+
+# Ambiente virtual e segredos locais
+.env
+.env/
+venv/
+.venv/
+*.env
+
+# Python / editor
+__pycache__/
+*.pyc
+.vscode/
