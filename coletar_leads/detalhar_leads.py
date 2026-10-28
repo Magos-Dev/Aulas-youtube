@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
-from comum import DADOS, Cancelado, chaves_coletadas
+from comum import Cancelado, chaves_coletadas, pasta
 
 
 REDES = {
@@ -108,13 +108,13 @@ def extrair(page, ctx, item):
 
 def detalhar(k, limite=None, log=print, headless=False, cancelado=lambda: False,
              progresso=lambda i, n, nome: None):
-    """Abre cada link de dados/dados_maps_<k>.json e grava dados/leads_detalhados_<k>.csv/.json."""
-    with open(DADOS / f"dados_maps_{k}.json", encoding="utf-8") as f:
+    """Abre cada link de dados_maps_<k>.json e grava leads_detalhados_<k>.csv/.json (na pasta da conta)."""
+    with open(pasta() / f"dados_maps_{k}.json", encoding="utf-8") as f:
         itens = json.load(f)
     if limite:
         itens = itens[:limite]
-    saida_json = DADOS / f"leads_detalhados_{k}.json"
-    saida_csv = DADOS / f"leads_detalhados_{k}.csv"
+    saida_json = pasta() / f"leads_detalhados_{k}.json"
+    saida_csv = pasta() / f"leads_detalhados_{k}.csv"
     resultados = []
 
     with sync_playwright() as p:

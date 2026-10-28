@@ -2,7 +2,7 @@ from playwright.sync_api import sync_playwright
 import json
 import time
 
-from comum import DADOS, Cancelado, chave, salvar_meta
+from comum import Cancelado, chave, pasta, salvar_meta
 
 SEL_LINK = 'a[href*="/maps/place/"]'
 VOLTAS_ROLAGEM = 10
@@ -71,9 +71,8 @@ def coletar(nicho, cidade, log=print, headless=False, interativo=False, cancelad
 
     lista = list(resultados.values())
     log(f"Coleta finalizada: {len(lista)} locais únicos.")
-    DADOS.mkdir(exist_ok=True)
     salvar_meta(k, nicho, cidade)
-    with open(DADOS / f"dados_maps_{k}.json", "w", encoding="utf-8") as f:
+    with open(pasta() / f"dados_maps_{k}.json", "w", encoding="utf-8") as f:
         json.dump(lista, f, ensure_ascii=False, indent=4)
     return k
 

@@ -19,3 +19,10 @@ venv/
 __pycache__/
 *.pyc
 .vscode/
+
+# Reforço: outros dados locais do app multi-conta
+dados/plataforma.db
+dados/plataforma.db-*
+dados/contas/
+dados/contas_excluidas/
+dados/backup/

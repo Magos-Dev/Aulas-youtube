@@ -1,13 +1,18 @@
-"""CRM em SQLite (dados/crm.db): status, anotações, histórico, cores, números verificados, fila de envios e respostas."""
+"""CRM em SQLite, um banco por conta (dados/contas/<id>/crm.db): status, anotações, histórico, cores,
+números verificados, fila de envios, respostas e configurações (fila, etapas, chaves do Gemini e do Pexels)."""
 import json
 import re
 import sqlite3
 from contextlib import closing
 from datetime import datetime, timedelta
 
-from comum import DADOS
+from comum import pasta
 
-BANCO = DADOS / "crm.db"
+
+def _banco():
+    return pasta() / "crm.db"
+
+
 FIXOS = ["enviado", "respondeu", "reuniao", "fechado", "sem"]  # etapas que o sistema usa; não podem ser excluídas
 STATUS = {"novo", *FIXOS}
 ID_CUSTOM = re.compile(r"^c_[a-z0-9]{3,16}$")  # etapas criadas pelo usuário
@@ -19,8 +24,7 @@ def status_valido(s):
 
 
 def _con():
-    DADOS.mkdir(exist_ok=True)
-    con = sqlite3.connect(BANCO, timeout=10)
+    con = sqlite3.connect(_banco(), timeout=10)
     con.execute("""CREATE TABLE IF NOT EXISTS crm (
         link TEXT PRIMARY KEY, status TEXT NOT NULL, notas TEXT NOT NULL DEFAULT '',
         proximo TEXT NOT NULL DEFAULT '', hist TEXT NOT NULL DEFAULT '[]', atualizado TEXT NOT NULL)""")
